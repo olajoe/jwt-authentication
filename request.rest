@@ -1,4 +1,5 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:6969
+@baseUrl2 = http://localhost:3000
 
 # @name login
 POST {{baseUrl}}/login HTTP/1.1
@@ -7,13 +8,21 @@ Content-Type: application/json
 {
   "username": "olajoe"
 }
+###
+@authToken = {{login.response.body.accessToken}}
+@refreshTokenData = {{login.response.body.$.refreshToken}}
 
+# @name refreshToken
+POST {{baseUrl}}/token HTTP/1.1
+Content-Type: application/json
+
+{
+  "token": "{{refreshTokenData}}"
+}
 ###
 
-@authToken = {{login.response.body.accessToken}}
-
 # @name getPosts
-GET {{baseUrl}}/posts HTTP/1.1
+GET {{baseUrl2}}/posts HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
