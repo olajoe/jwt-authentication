@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:3000
+
+# @name login
+POST {{baseUrl}}/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "olajoe"
+}
+
+###
+
+@authToken = {{login.response.body.accessToken}}
+
+# @name getPosts
+GET {{baseUrl}}/posts HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
